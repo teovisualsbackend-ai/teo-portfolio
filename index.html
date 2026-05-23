@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teo Visuals — AI & Creative Dev</title>
+  <style>
+    :root {
+      --bg: #080810;
+      --surface: #10101e;
+      --card: #141428;
+      --border: rgba(120, 80, 255, 0.15);
+      --accent: #7850ff;
+      --accent2: #00d4ff;
+      --text: #e8e8f0;
+      --muted: #6b6b8a;
+      --glow: rgba(120, 80, 255, 0.35);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── Canvas background ─── */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(8, 8, 16, 0.6);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ─── Sections ─── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── Hero ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(120, 80, 255, 0.08);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--accent2);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent2);
+      box-shadow: 0 0 6px var(--accent2);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+
+    h1 .grad {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 24px var(--glow);
+    }
+    .btn-primary:hover {
+      background: #9070ff;
+      box-shadow: 0 0 36px var(--glow);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* ─── Scroll indicator ─── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: fadeUp 1s 0.6s ease both;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ─── Shared section styles ─── */
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+
+    /* ─── About ─── */
+    #about .section-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .about-text p span { color: var(--text); font-weight: 500; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ─── Projects ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.25s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(120, 80, 255, 0.06), transparent 60%);
+      pointer-events: none;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(120, 80, 255, 0.15);
+    }
+
+    .project-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(120, 80, 255, 0.12);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      background: rgba(120, 80, 255, 0.1);
+      color: var(--accent2);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+    }
+
+    /* ─── Skills ─── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: all 0.2s;
+    }
+    .skill-item:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .skill-icon { font-size: 1.3rem; }
+    .skill-name { font-size: 0.875rem; font-weight: 500; }
+
+    /* ─── Contact ─── */
+    #contact {
+      background: linear-gradient(to bottom, transparent, rgba(120, 80, 255, 0.04));
+    }
+
+    .contact-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+
+    .contact-inner .section-title { margin-bottom: 1rem; }
+
+    .contact-sub {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── Animations ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      #about .section-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .section-inner { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">teo.visuals</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge">Available for projects</div>
+  <h1>AI Builder &<br><span class="grad">Creative Dev</span></h1>
+  <p class="hero-sub">
+    I build intelligent tools that merge AI with visual storytelling — from content pipelines to interactive experiences.
+  </p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View Work ↓</a>
+    <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+  </div>
+  <div class="scroll-hint">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-text reveal">
+      <p class="section-label">About</p>
+      <h2 class="section-title">Building at the edge of<br>AI &amp; Creativity</h2>
+      <p>I'm <span>Teo</span> — a developer and creative technologist obsessed with building tools that make creative workflows smarter and faster.</p>
+      <p>I work at the intersection of <span>AI automation</span>, <span>content creation</span>, and <span>backend engineering</span> — turning complex ideas into polished, functional products.</p>
+      <p>When I'm not shipping code, I'm researching how AI is reshaping content, media, and storytelling.</p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-card">
+        <div class="stat-num">AI</div>
+        <div class="stat-label">First approach to every problem</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Ideas in the backlog</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">24h</div>
+        <div class="stat-label">Typical time from idea to MVP</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Shipped with intention</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <p class="section-label reveal">Projects</p>
+    <h2 class="section-title reveal">Things I've built</h2>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-icon">🎙️</div>
+        <div class="project-title">Content Researcher</div>
+        <div class="project-desc">
+          AI-powered tool that transcribes video and audio content, extracts key insights, and generates structured research notes — all from a local interface.
+        </div>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Whisper</span>
+          <span class="tag">Flask</span>
+          <span class="tag">AI</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-icon">🤖</div>
+        <div class="project-title">AI Automation Pipelines</div>
+        <div class="project-desc">
+          Custom automation flows connecting AI models to real-world workflows — from content repurposing to social media scheduling and analysis.
+        </div>
+        <div class="project-tags">
+          <span class="tag">Claude API</span>
+          <span class="tag">Automation</span>
+          <span class="tag">REST</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-icon">🎬</div>
+        <div class="project-title">Visual Storytelling Tools</div>
+        <div class="project-desc">
+          Tooling for creators that bridges the gap between raw footage and polished narratives — leveraging AI for script generation and editing guidance.
+        </div>
+        <div class="project-tags">
+          <span class="tag">AI</span>
+          <span class="tag">Video</span>
+          <span class="tag">NLP</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-icon">🔍</div>
+        <div class="project-title">YouTube Research Engine</div>
+        <div class="project-desc">
+          Research assistant that analyzes YouTube channels, trends, and keyword data to surface content opportunities and competitive insights.
+        </div>
+        <div class="project-tags">
+          <span class="tag">vidIQ</span>
+          <span class="tag">Analytics</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <p class="section-label reveal">Skills</p>
+    <h2 class="section-title reveal">Tech I work with</h2>
+    <div class="skills-grid">
+      <div class="skill-item reveal"><span class="skill-icon">🧠</span><span class="skill-name">Claude / LLMs</span></div>
+      <div class="skill-item reveal"><span class="skill-icon">🐍</span><span class="skill-name">Python</span></div>
+      <div class="skill-item reveal"><span class="skill-icon">⚡</span><span class="skill-name">Flask / FastAPI</span></div>
+      <div class="skill-item reveal"><span class="skill-icon">🌐</span><span class="skill-name">HTML / CSS / JS</span></div>
+      <div class="skill-item reveal"><span class="skill-icon">🔗</span><span class="skill-name">REST APIs</span></div>
+      <div class="skill-item reveal"><span class="skill-icon">🐙</span><span class="skill-name">Git / GitHub</span></div>
+      <div class="skill-item reveal"><span class="skill-icon">🎙️</span><span class="skill-name">Whisper / ASR</span></div>
+      <div class="skill-item reveal"><span class="skill-icon">🎬</span><span class="skill-name">Video Production</span></div>
+      <div class="skill-item reveal"><span class="skill-icon">📊</span><span class="skill-name">Content Analytics</span></div>
+      <div class="skill-item reveal"><span class="skill-icon">🤖</span><span class="skill-name">AI Automation</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <p class="section-label reveal">Contact</p>
+    <h2 class="section-title reveal">Let's build something</h2>
+    <p class="contact-sub reveal">
+      Open to collaborations, freelance projects, and interesting ideas. Drop me a message and let's make it happen.
+    </p>
+    <div class="contact-links reveal">
+      <a href="mailto:teovisuals02@gmail.com" class="contact-link">
+        ✉️ teovisuals02@gmail.com
+      </a>
+      <a href="https://github.com/teovisualsbackend-ai" class="contact-link" target="_blank">
+        🐙 GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built with intention by Teo Visuals · 2026</p>
+</footer>
+
+<script>
+  /* ── Particle canvas ── */
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function initParticles() {
+    particles = Array.from({ length: 80 }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.5 + 0.3,
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3,
+      opacity: Math.random() * 0.5 + 0.1,
+    }));
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, W, H);
+    for (const p of particles) {
+      p.x += p.dx;
+      p.y += p.dy;
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(120, 80, 255, ${p.opacity})`;
+      ctx.fill();
+    }
+
+    // Connect nearby particles
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(120, 80, 255, ${0.08 * (1 - dist / 120)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(drawParticles);
+  }
+
+  window.addEventListener('resize', () => { resize(); initParticles(); });
+  resize();
+  initParticles();
+  drawParticles();
+
+  /* ── Scroll reveal ── */
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ── Typed effect in hero badge ── */
+  const badge = document.querySelector('.hero-badge');
+  const messages = ['Available for projects', 'Open to collabs', 'Building with AI'];
+  let mi = 0;
+  setInterval(() => {
+    mi = (mi + 1) % messages.length;
+    badge.childNodes[1].textContent = messages[mi];
+  }, 3000);
+</script>
+</body>
+</html>
