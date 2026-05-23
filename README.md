@@ -2,13 +2,12 @@
 
 Personal portfolio website for Teo Visuals — AI Builder & Creative Dev.
 
-## Preview
+## Files
 
-![Hero](ss_01_hero.png)
-
-![About](ss_02_about.png)
-
-![Skills & Contact](ss_safari.png)
+- `index.html` — main portfolio site
+- `inspo-scorer.html` — interactive tool to score sections of reference sites (currently loaded with betastudio.com.co)
+- `capture-beta.mjs` — Playwright script that captures screenshots from inspiration sites
+- `beta_*.png` — screenshots of betastudio.com.co used as inspiration reference
 
 ## Stack
 
@@ -17,6 +16,6 @@ Personal portfolio website for Teo Visuals — AI Builder & Creative Dev.
 - Scroll reveal animations
 - Fully responsive
 
-## Live
+## Local
 
-Open `index.html` locally or deploy via GitHub Pages.
+Open `index.html` directly in a browser, or serve the folder with any static server.

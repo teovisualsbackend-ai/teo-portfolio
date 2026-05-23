@@ -115,6 +115,36 @@
     .section-card.scored-high { border-color: rgba(0, 230, 118, 0.3); }
     .section-card.scored-low  { border-color: rgba(255, 71, 87, 0.2); }
 
+    .section-screenshot {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin-bottom: 1.25rem;
+      display: block;
+      background: #000;
+      cursor: zoom-in;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .section-screenshot:hover {
+      border-color: var(--accent);
+      transform: scale(1.005);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 95%; max-height: 95%; border-radius: 12px; }
+
     .card-top {
       display: flex;
       justify-content: space-between;
@@ -317,44 +347,45 @@
   <button class="copy-btn" onclick="copyExport()">Copiar al portapapeles</button>
 </div>
 
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
 <footer>Herramienta generada por Claude Code · teo.visuals 2026</footer>
 
 <script>
 const SECTIONS = [
   {
-    id: 'nav',
-    num: '01',
-    name: 'Navegación / Header',
-    desc: 'Barra fija con logo y links principales. Menú hamburguesa en mobile. Fondo neutro/blanco con fuente sans-serif limpia.',
-    tags: ['Fixed nav', 'Logo', 'Hamburger menu', 'Minimalista'],
-  },
-  {
     id: 'hero',
-    num: '02',
-    name: 'Hero Section',
-    desc: 'Imagen full-width de un proyecto destacado ("The Throne — Fashion Film") con texto overlay centrado. Impacto visual fuerte desde el primer scroll.',
-    tags: ['Full-width image', 'Text overlay', 'Fashion/Cinematic', 'Bold first impression'],
+    num: '01',
+    name: 'Hero — "BETA STUDIO"',
+    img: 'beta_01_hero.png',
+    desc: 'Video/imagen cinematográfica full-screen de un paisaje oscuro y atmosférico con el texto "BETA STUDIO" centrado en blanco. Logo "B" arriba a la izquierda, nav minimalista a la derecha (Home, Portfolio, About, Contact). Impacto inmediato.',
+    tags: ['Full-screen video', 'Cinematic', 'Minimal nav', 'Bold typography'],
   },
   {
     id: 'projects',
-    num: '03',
+    num: '02',
     name: 'Showcase de Proyectos',
-    desc: 'Grid de proyectos con imagen + título. Proyectos destacados: Ferrari Spider Roma, Xiaomi. CTA "View More" al final. Layout limpio y editorial.',
-    tags: ['Project grid', 'Image cards', 'Editorial', 'CTA link'],
+    img: 'beta_02_projects.png',
+    desc: 'Tres proyectos en video reproducibles inline (The Throne — Fashion Film, Ferrari Spider Roma, Xiaomi) en grid horizontal. Cada uno tiene play, controles de duración, volumen y fullscreen. CTA "VIEW MORE" alineado a la derecha. Fondo 100% negro.',
+    tags: ['Video grid', 'Inline players', 'Editorial', 'CTA discreto'],
   },
   {
-    id: 'stats',
-    num: '04',
-    name: 'Sección de Estadísticas',
-    desc: 'Número grande aislado: "+100 Clients". Tipografía bold, mucho espacio negativo. Simple pero contundente.',
-    tags: ['Bold numbers', 'Negative space', 'Social proof', 'Minimal'],
+    id: 'clients',
+    num: '03',
+    name: 'Stats + Clientes',
+    img: 'beta_03_more.png',
+    desc: '"+100 CLIENTS" en blanco a la izquierda, grid de logos de marcas a la derecha (Porsche, BALR, Kia, Xiaomi, KTM, Yeti, Mercedes, Mazda, Suzuki, Emmir, Everyplace, Alemautos, Podium…). Social proof máximo con simplicidad total.',
+    tags: ['Social proof', 'Logo wall', 'Big text', 'Negative space'],
   },
   {
     id: 'footer',
-    num: '05',
+    num: '04',
     name: 'Footer',
-    desc: 'Logo, nombre de la empresa, email de contacto, teléfono, íconos de redes sociales (YouTube, Instagram). Fondo neutro, estructura clara.',
-    tags: ['Logo repeat', 'Contact info', 'Social icons', 'Clean layout'],
+    img: 'beta_03_more.png',
+    desc: '"BETA STUDIO" gigante centrado, email "contacto@betastudio.com.co" como link subrayado, teléfono debajo, e íconos de YouTube e Instagram. Tipografía consistente con el resto del sitio. Cero adorno.',
+    tags: ['Big logo type', 'Direct contact', 'Social icons', 'Centered layout'],
   },
 ];
 
@@ -382,6 +413,7 @@ function renderSections() {
           <button class="verdict-btn skip"  data-id="${s.id}" data-v="skip"  onclick="setVerdict('${s.id}','skip')">✕ Saltar</button>
         </div>
       </div>
+      ${s.img ? `<img src="${s.img}" alt="${s.name}" class="section-screenshot" onclick="openLightbox('${s.img}')">` : ''}
       <div class="section-desc">
         ${s.desc}
         <div class="detail">${s.tags.map(t => `<span class="detail-tag">${t}</span>`).join('')}</div>
@@ -483,6 +515,14 @@ function copyExport() {
     btn.textContent = '✓ Copiado';
     setTimeout(() => btn.textContent = 'Copiar al portapapeles', 2000);
   });
+}
+
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
 }
 
 renderSections();
