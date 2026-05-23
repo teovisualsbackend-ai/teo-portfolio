@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inspo Scorer — betastudio.com.co</title>
+  <style>
+    :root {
+      --bg: #090910;
+      --surface: #111120;
+      --card: #15151f;
+      --border: rgba(120, 80, 255, 0.15);
+      --accent: #7850ff;
+      --accent2: #00d4ff;
+      --green: #00e676;
+      --red: #ff4757;
+      --yellow: #ffd32a;
+      --text: #e8e8f0;
+      --muted: #6b6b8a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    /* ── Header ── */
+    .header {
+      max-width: 900px;
+      margin: 0 auto 2.5rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .header-left h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .header-left h1 span {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .header-left p {
+      color: var(--muted);
+      font-size: 0.875rem;
+      margin-top: 0.3rem;
+    }
+    .header-left a {
+      color: var(--accent2);
+      font-size: 0.8rem;
+      text-decoration: none;
+      margin-top: 0.25rem;
+      display: inline-block;
+      opacity: 0.8;
+    }
+    .header-left a:hover { opacity: 1; }
+
+    /* ── Summary bar ── */
+    .summary-bar {
+      max-width: 900px;
+      margin: 0 auto 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .summary-stat { display: flex; flex-direction: column; align-items: center; gap: 0.15rem; }
+    .summary-num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .summary-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .summary-bar-divider { width: 1px; height: 40px; background: var(--border); }
+
+    .export-btn {
+      margin-left: auto;
+      padding: 0.6rem 1.4rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .export-btn:hover { background: #9070ff; transform: translateY(-1px); }
+
+    /* ── Section cards ── */
+    .sections { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: border-color 0.2s;
+    }
+    .section-card:hover { border-color: rgba(120, 80, 255, 0.35); }
+    .section-card.scored-high { border-color: rgba(0, 230, 118, 0.3); }
+    .section-card.scored-low  { border-color: rgba(255, 71, 87, 0.2); }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-meta {}
+    .section-num {
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .section-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    /* steal / skip toggle */
+    .verdict-toggle {
+      display: flex;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+    .verdict-btn {
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .verdict-btn.steal.active { background: rgba(0,230,118,0.15); border-color: var(--green); color: var(--green); }
+    .verdict-btn.skip.active  { background: rgba(255,71,87,0.12); border-color: var(--red); color: var(--red); }
+    .verdict-btn.maybe.active { background: rgba(255,211,42,0.12); border-color: var(--yellow); color: var(--yellow); }
+
+    /* description */
+    .section-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-desc .detail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.6rem;
+    }
+    .detail-tag {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(120,80,255,0.08);
+      border: 1px solid var(--border);
+      font-size: 0.7rem;
+      color: var(--accent2);
+    }
+
+    /* star rating */
+    .rating-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .rating-label { font-size: 0.78rem; color: var(--muted); min-width: 90px; }
+    .stars { display: flex; gap: 0.3rem; }
+    .star {
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: transform 0.1s;
+      filter: grayscale(1) opacity(0.3);
+      user-select: none;
+    }
+    .star:hover, .star.active { filter: none; transform: scale(1.15); }
+    .score-badge {
+      margin-left: auto;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      min-width: 60px;
+      text-align: right;
+    }
+    .score-badge.s1, .score-badge.s2 { color: var(--red); }
+    .score-badge.s3 { color: var(--yellow); }
+    .score-badge.s4, .score-badge.s5 { color: var(--green); }
+
+    /* notes */
+    .notes-area {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 60px;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .notes-area:focus { border-color: var(--accent); }
+    .notes-area::placeholder { color: var(--muted); }
+
+    /* ── Export panel ── */
+    #export-panel {
+      display: none;
+      max-width: 900px;
+      margin: 2rem auto 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+    #export-panel h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; }
+    #export-content {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      white-space: pre-wrap;
+      font-family: 'Courier New', monospace;
+      line-height: 1.7;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .copy-btn {
+      margin-top: 1rem;
+      padding: 0.55rem 1.25rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    footer {
+      max-width: 900px;
+      margin: 3rem auto 0;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      padding-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>Inspo Scorer <span>— betastudio</span></h1>
+    <p>Puntúa cada sección del sitio para usarlo como referencia en tu portafolio</p>
+    <a href="https://www.betastudio.com.co/" target="_blank">↗ Ver sitio original</a>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary-bar">
+  <div class="summary-stat">
+    <span class="summary-num" id="avg-score">—</span>
+    <span class="summary-label">Puntuación media</span>
+  </div>
+  <div class="summary-bar-divider"></div>
+  <div class="summary-stat">
+    <span class="summary-num" id="steal-count" style="color:var(--green)">0</span>
+    <span class="summary-label">Robar</span>
+  </div>
+  <div class="summary-stat">
+    <span class="summary-num" id="maybe-count" style="color:var(--yellow)">0</span>
+    <span class="summary-label">Quizás</span>
+  </div>
+  <div class="summary-stat">
+    <span class="summary-num" id="skip-count" style="color:var(--red)">0</span>
+    <span class="summary-label">Saltar</span>
+  </div>
+  <button class="export-btn" onclick="toggleExport()">Exportar resumen ↓</button>
+</div>
+
+<!-- Section cards -->
+<div class="sections" id="sections"></div>
+
+<!-- Export panel -->
+<div id="export-panel">
+  <h2>📋 Resumen de inspiración</h2>
+  <pre id="export-content"></pre>
+  <button class="copy-btn" onclick="copyExport()">Copiar al portapapeles</button>
+</div>
+
+<footer>Herramienta generada por Claude Code · teo.visuals 2026</footer>
+
+<script>
+const SECTIONS = [
+  {
+    id: 'nav',
+    num: '01',
+    name: 'Navegación / Header',
+    desc: 'Barra fija con logo y links principales. Menú hamburguesa en mobile. Fondo neutro/blanco con fuente sans-serif limpia.',
+    tags: ['Fixed nav', 'Logo', 'Hamburger menu', 'Minimalista'],
+  },
+  {
+    id: 'hero',
+    num: '02',
+    name: 'Hero Section',
+    desc: 'Imagen full-width de un proyecto destacado ("The Throne — Fashion Film") con texto overlay centrado. Impacto visual fuerte desde el primer scroll.',
+    tags: ['Full-width image', 'Text overlay', 'Fashion/Cinematic', 'Bold first impression'],
+  },
+  {
+    id: 'projects',
+    num: '03',
+    name: 'Showcase de Proyectos',
+    desc: 'Grid de proyectos con imagen + título. Proyectos destacados: Ferrari Spider Roma, Xiaomi. CTA "View More" al final. Layout limpio y editorial.',
+    tags: ['Project grid', 'Image cards', 'Editorial', 'CTA link'],
+  },
+  {
+    id: 'stats',
+    num: '04',
+    name: 'Sección de Estadísticas',
+    desc: 'Número grande aislado: "+100 Clients". Tipografía bold, mucho espacio negativo. Simple pero contundente.',
+    tags: ['Bold numbers', 'Negative space', 'Social proof', 'Minimal'],
+  },
+  {
+    id: 'footer',
+    num: '05',
+    name: 'Footer',
+    desc: 'Logo, nombre de la empresa, email de contacto, teléfono, íconos de redes sociales (YouTube, Instagram). Fondo neutro, estructura clara.',
+    tags: ['Logo repeat', 'Contact info', 'Social icons', 'Clean layout'],
+  },
+];
+
+const scores = {};
+const verdicts = {};
+const notes = {};
+
+function renderSections() {
+  const container = document.getElementById('sections');
+  container.innerHTML = '';
+  SECTIONS.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'section-card';
+    card.id = `card-${s.id}`;
+
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="section-meta">
+          <div class="section-num">Sección ${s.num}</div>
+          <div class="section-name">${s.name}</div>
+        </div>
+        <div class="verdict-toggle">
+          <button class="verdict-btn steal" data-id="${s.id}" data-v="steal" onclick="setVerdict('${s.id}','steal')">✦ Robar</button>
+          <button class="verdict-btn maybe" data-id="${s.id}" data-v="maybe" onclick="setVerdict('${s.id}','maybe')">~ Quizás</button>
+          <button class="verdict-btn skip"  data-id="${s.id}" data-v="skip"  onclick="setVerdict('${s.id}','skip')">✕ Saltar</button>
+        </div>
+      </div>
+      <div class="section-desc">
+        ${s.desc}
+        <div class="detail">${s.tags.map(t => `<span class="detail-tag">${t}</span>`).join('')}</div>
+      </div>
+      <div class="rating-row">
+        <span class="rating-label">Puntuación</span>
+        <div class="stars" id="stars-${s.id}">
+          ${[1,2,3,4,5].map(n => `<span class="star" data-n="${n}" onclick="setScore('${s.id}',${n})">★</span>`).join('')}
+        </div>
+        <span class="score-badge" id="badge-${s.id}">sin puntuar</span>
+      </div>
+      <textarea class="notes-area" id="notes-${s.id}" placeholder="Notas… ¿qué te gusta? ¿qué adaptarías para tu portafolio?" oninput="saveNote('${s.id}')"></textarea>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function setScore(id, n) {
+  scores[id] = n;
+  const stars = document.querySelectorAll(`#stars-${id} .star`);
+  stars.forEach((s, i) => s.classList.toggle('active', i < n));
+  const badge = document.getElementById(`badge-${id}`);
+  const labels = ['', 'Meh', 'Regular', 'Interesante', 'Me gusta', '¡Wow!'];
+  badge.textContent = `${n}/5 · ${labels[n]}`;
+  badge.className = `score-badge s${n}`;
+  updateCard(id);
+  updateSummary();
+}
+
+function setVerdict(id, v) {
+  verdicts[id] = v;
+  ['steal','maybe','skip'].forEach(k => {
+    document.querySelector(`.verdict-btn.${k}[data-id="${id}"]`).classList.toggle('active', k === v);
+  });
+  updateCard(id);
+  updateSummary();
+}
+
+function saveNote(id) {
+  notes[id] = document.getElementById(`notes-${id}`).value;
+}
+
+function updateCard(id) {
+  const card = document.getElementById(`card-${id}`);
+  card.classList.remove('scored-high', 'scored-low');
+  const v = verdicts[id];
+  const s = scores[id];
+  if (v === 'steal' || s >= 4) card.classList.add('scored-high');
+  else if (v === 'skip' || s <= 2 && s > 0) card.classList.add('scored-low');
+}
+
+function updateSummary() {
+  const scored = Object.values(scores).filter(Boolean);
+  const avg = scored.length ? (scored.reduce((a,b) => a+b, 0) / scored.length).toFixed(1) : '—';
+  document.getElementById('avg-score').textContent = avg;
+  document.getElementById('steal-count').textContent = Object.values(verdicts).filter(v => v === 'steal').length;
+  document.getElementById('maybe-count').textContent = Object.values(verdicts).filter(v => v === 'maybe').length;
+  document.getElementById('skip-count').textContent = Object.values(verdicts).filter(v => v === 'skip').length;
+}
+
+function toggleExport() {
+  const panel = document.getElementById('export-panel');
+  const visible = panel.style.display === 'block';
+  if (!visible) {
+    buildExport();
+    panel.style.display = 'block';
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    panel.style.display = 'none';
+  }
+}
+
+function buildExport() {
+  const lines = [`INSPO SCORER — betastudio.com.co\n${'─'.repeat(40)}\n`];
+  SECTIONS.forEach(s => {
+    const score  = scores[s.id]   ? `${scores[s.id]}/5` : 'sin puntuar';
+    const verdict = verdicts[s.id] || 'sin veredicto';
+    const note   = notes[s.id]    || '—';
+    const vLabel = { steal: '✦ ROBAR', maybe: '~ QUIZÁS', skip: '✕ SALTAR' }[verdict] || verdict;
+    lines.push(`[${s.num}] ${s.name}`);
+    lines.push(`    Puntuación : ${score}`);
+    lines.push(`    Veredicto  : ${vLabel}`);
+    lines.push(`    Notas      : ${note}`);
+    lines.push('');
+  });
+  const scored = Object.values(scores).filter(Boolean);
+  const avg = scored.length ? (scored.reduce((a,b)=>a+b,0)/scored.length).toFixed(1) : '—';
+  lines.push(`─`.repeat(40));
+  lines.push(`Puntuación media  : ${avg}`);
+  lines.push(`Secciones a robar : ${Object.values(verdicts).filter(v=>v==='steal').length}`);
+  lines.push(`Generado          : ${new Date().toLocaleDateString('es-CO', {dateStyle:'long'})}`);
+  document.getElementById('export-content').textContent = lines.join('\n');
+}
+
+function copyExport() {
+  const text = document.getElementById('export-content').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => btn.textContent = 'Copiar al portapapeles', 2000);
+  });
+}
+
+renderSections();
+</script>
+</body>
+</html>
