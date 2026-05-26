@@ -598,6 +598,9 @@
     }
     /* Opt-out: preserve original colors for color/special logos */
     .logo-slot.color img { filter: none; }
+    /* Size overrides: logos with lots of canvas padding need to render bigger */
+    .logo-slot.lg img { max-height: 72px; max-width: 220px; }
+    .logo-slot.xl img { max-height: 88px; max-width: 260px; }
     .logo-slot.placeholder {
       border: 1px dashed var(--line-strong);
       border-radius: 8px;
@@ -1192,16 +1195,16 @@
     <div class="marquee-track">
       <!-- Set 1 -->
       <div class="logo-slot"><img src="assets/logos/Mercedes-Benz_Logo.svg" alt="Mercedes-Benz"></div>
-      <div class="logo-slot color"><img src="assets/logos/smart-logo-.png" alt="Smart"></div>
-      <div class="logo-slot"><img src="assets/logos/ALEMAUTOS 2.png" alt="Alemautos"></div>
+      <div class="logo-slot color xl"><img src="assets/logos/smart-logo-.png" alt="Smart"></div>
+      <div class="logo-slot lg"><img src="assets/logos/ALEMAUTOS 2.png" alt="Alemautos"></div>
       <div class="logo-slot"><img src="assets/logos/POBLAUTOS.png" alt="Poblautos"></div>
       <div class="logo-slot"><img src="assets/logos/Logo Everyplace.png" alt="Everyplace"></div>
       <div class="logo-slot color"><img src="assets/logos/Jumbo.png" alt="Chocolates Jumbo"></div>
       <div class="logo-slot color"><img src="assets/logos/Chocolatesjet.webp" alt="Chocolates Jet"></div>
       <!-- Set 2 (duplicate for seamless loop) -->
       <div class="logo-slot" aria-hidden="true"><img src="assets/logos/Mercedes-Benz_Logo.svg" alt=""></div>
-      <div class="logo-slot color" aria-hidden="true"><img src="assets/logos/smart-logo-.png" alt=""></div>
-      <div class="logo-slot" aria-hidden="true"><img src="assets/logos/ALEMAUTOS 2.png" alt=""></div>
+      <div class="logo-slot color xl" aria-hidden="true"><img src="assets/logos/smart-logo-.png" alt=""></div>
+      <div class="logo-slot lg" aria-hidden="true"><img src="assets/logos/ALEMAUTOS 2.png" alt=""></div>
       <div class="logo-slot" aria-hidden="true"><img src="assets/logos/POBLAUTOS.png" alt=""></div>
       <div class="logo-slot" aria-hidden="true"><img src="assets/logos/Logo Everyplace.png" alt=""></div>
       <div class="logo-slot color" aria-hidden="true"><img src="assets/logos/Jumbo.png" alt=""></div>
