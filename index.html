@@ -220,7 +220,16 @@
     }
 
     /* Distinct gradient per slot */
-    .project:nth-child(1) .project-thumb { background: radial-gradient(ellipse at 30% 40%, #3a2820 0%, #0a0a0a 75%); }
+    .project:nth-child(1) .project-thumb {
+      background: url('assets/thumbnails/01-alemautos-mercedes.jpg') center/cover no-repeat;
+    }
+    .project:nth-child(1) .project-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4));
+    }
+    .project:nth-child(1) .project-thumb-text { display: none; }
     .project:nth-child(2) .project-thumb { background: radial-gradient(ellipse at 70% 60%, #1a2030 0%, #060608 75%); }
     .project:nth-child(3) .project-thumb { background: radial-gradient(ellipse at 50% 50%, #2a1a20 0%, #080606 75%); }
     .project:nth-child(4) .project-thumb { background: radial-gradient(ellipse at 40% 30%, #20302a 0%, #060808 75%); }
@@ -423,41 +432,101 @@
       line-height: 1.6;
     }
 
-    /* ─── MANIFIESTO ─── */
-    #manifiesto {
+    /* ─── SOBRE MÍ ─── */
+    #sobre {
       border-top: 1px solid var(--line);
-      padding: 10rem 2.5rem;
+      padding: 8rem 2.5rem;
     }
-    .manifiesto-body {
-      max-width: 900px;
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1fr;
+      gap: 5rem;
+      max-width: 1300px;
       margin: 0 auto;
-      text-align: center;
+      align-items: center;
     }
-    .manifiesto-pre {
+    .about-photo {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      filter: grayscale(0.15) contrast(1.05);
+      transition: filter 0.5s;
+    }
+    .about-photo:hover img {
+      filter: grayscale(0) contrast(1);
+    }
+    .about-photo-tag {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+      opacity: 0.85;
+    }
+
+    .about-body {}
+    .about-eyebrow {
       font-size: 0.78rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       opacity: 0.5;
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.5rem;
     }
-    .manifiesto-quote {
+    .about-title {
       font-family: 'Anton', sans-serif;
-      font-size: clamp(2rem, 5vw, 3.75rem);
-      line-height: 1.1;
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
       letter-spacing: 0.01em;
-      margin-bottom: 2.5rem;
+      line-height: 1.05;
+      margin-bottom: 2rem;
     }
-    .manifiesto-quote em {
+    .about-title .dim { color: rgba(255,255,255,0.35); display: block; }
+    .about-text p {
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+      max-width: 540px;
+    }
+    .about-text p strong {
+      color: #fff;
+      font-weight: 500;
+    }
+    .about-quote {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      letter-spacing: 0.02em;
+      line-height: 1.3;
+      max-width: 540px;
+    }
+    .about-quote em {
       font-style: italic;
       font-family: 'Inter', sans-serif;
       font-weight: 300;
-      opacity: 0.7;
+      color: var(--muted);
     }
-    .manifiesto-sig {
-      font-size: 0.85rem;
+    .about-sig {
+      margin-top: 1.5rem;
+      font-size: 0.78rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      opacity: 0.55;
+      opacity: 0.5;
     }
 
     /* ─── CLIENTES ─── */
@@ -509,22 +578,33 @@
     .logo-slot {
       flex: 0 0 auto;
       min-width: 170px;
-      height: 64px;
-      border: 1px dashed var(--line-strong);
-      border-radius: 8px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 1.5rem;
+      padding: 0 1.75rem;
+      opacity: 0.55;
+      transition: opacity 0.25s, filter 0.25s;
+      white-space: nowrap;
+    }
+    .logo-slot:hover { opacity: 1; }
+    .logo-slot img {
+      max-height: 42px;
+      max-width: 150px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+    .logo-slot.placeholder {
+      border: 1px dashed var(--line-strong);
+      border-radius: 8px;
       font-family: 'Anton', sans-serif;
       font-size: 0.85rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      opacity: 0.55;
-      transition: all 0.25s;
-      white-space: nowrap;
     }
-    .logo-slot:hover { opacity: 1; border-color: #fff; }
+    .logo-slot.placeholder:hover { border-color: #fff; }
 
     /* ─── PROCESO ─── */
     #proceso {
@@ -808,6 +888,9 @@
 
       .services-layout { grid-template-columns: 1fr; gap: 3rem; }
 
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-photo { max-width: 360px; }
+
       .recursos-grid { grid-template-columns: 1fr; }
       .recursos-head { align-items: flex-start; }
 
@@ -828,7 +911,7 @@
   <ul class="nav-links" id="navLinks">
     <li><a href="#proyectos">Proyectos</a></li>
     <li><a href="#servicios">Servicios</a></li>
-    <li><a href="#sectores">Sectores</a></li>
+    <li><a href="#sobre">Sobre mí</a></li>
     <li><a href="#clientes">Clientes</a></li>
     <li><a href="#recursos">Recursos</a></li>
     <li><a href="#contacto">Contacto</a></li>
@@ -860,12 +943,11 @@
 
     <div class="projects-grid">
       <div class="project reveal">
-        <div class="project-thumb">REEL</div>
-        <span class="project-placeholder-tag">Próximamente</span>
+        <div class="project-thumb"><span class="project-thumb-text">REEL</span></div>
         <div class="project-overlay">
           <div class="project-info">
-            <div class="project-cat">Automotriz · Reel</div>
-            <div class="project-name">PROYECTO 01</div>
+            <div class="project-cat">Automotriz · Mercedes-Benz</div>
+            <div class="project-name">ALEMAUTOS × PAJÓN</div>
           </div>
         </div>
       </div>
@@ -1063,15 +1145,36 @@
   </div>
 </section>
 
-<!-- MANIFIESTO -->
-<section id="manifiesto">
-  <div class="manifiesto-body reveal">
-    <div class="manifiesto-pre">— Manifiesto</div>
-    <p class="manifiesto-quote">
-      No hacemos videos por hacerlos.<br>
-      <em>Creamos contenido pensado para atraer, generar confianza y apoyar tus objetivos comerciales.</em>
-    </p>
-    <div class="manifiesto-sig">Mateo Escobar · Teo Visuals</div>
+<!-- SOBRE MÍ -->
+<section id="sobre">
+  <div class="about-grid">
+    <div class="about-photo reveal">
+      <img src="assets/about/teo-cerrovento-gimbal.jpg" alt="Mateo Escobar grabando en Cerro Vento, Medellín">
+      <div class="about-photo-tag">Cerro Vento · Medellín</div>
+    </div>
+
+    <div class="about-body reveal">
+      <div class="about-eyebrow">— Sobre mí</div>
+      <h2 class="about-title">
+        <span class="dim">Detrás de cada video,</span>
+        <span>una intención clara.</span>
+      </h2>
+
+      <div class="about-text">
+        <p>
+          Soy <strong>Mateo Escobar</strong>, videógrafo y director creativo basado en <strong>Medellín</strong>. Llevo desde 2020 produciendo contenido para marcas, con foco en el sector automotriz, inmobiliario y corporativo.
+        </p>
+        <p>
+          Mi trabajo no es solo grabar y editar. Es <strong>entender qué necesita comunicar tu marca</strong> y construir las piezas audiovisuales que lo hagan posible — con criterio cinematográfico y mentalidad de resultados.
+        </p>
+      </div>
+
+      <p class="about-quote">
+        No hacemos videos por hacerlos.<br>
+        <em>Creamos contenido pensado para atraer, generar confianza y apoyar tus objetivos comerciales.</em>
+      </p>
+      <div class="about-sig">Mateo Escobar · Teo Visuals</div>
+    </div>
   </div>
 </section>
 
@@ -1086,23 +1189,23 @@
   <div class="marquee reveal">
     <div class="marquee-track">
       <!-- Set 1 -->
-      <div class="logo-slot">Logo 01</div>
-      <div class="logo-slot">Logo 02</div>
-      <div class="logo-slot">Logo 03</div>
-      <div class="logo-slot">Logo 04</div>
-      <div class="logo-slot">Logo 05</div>
-      <div class="logo-slot">Logo 06</div>
-      <div class="logo-slot">Logo 07</div>
-      <div class="logo-slot">Logo 08</div>
+      <div class="logo-slot"><img src="assets/logos/Mercedes-Benz_Logo.svg" alt="Mercedes-Benz"></div>
+      <div class="logo-slot"><img src="assets/logos/ALEMAUTOS 2.png" alt="Alemautos"></div>
+      <div class="logo-slot"><img src="assets/logos/POBLAUTOS.png" alt="Poblautos"></div>
+      <div class="logo-slot placeholder">Smart</div>
+      <div class="logo-slot placeholder">Everyplace</div>
+      <div class="logo-slot placeholder">Chocolates Jumbo</div>
+      <div class="logo-slot placeholder">Chocolates Jet</div>
+      <div class="logo-slot placeholder">Logo +1</div>
       <!-- Set 2 (duplicate for seamless loop) -->
-      <div class="logo-slot" aria-hidden="true">Logo 01</div>
-      <div class="logo-slot" aria-hidden="true">Logo 02</div>
-      <div class="logo-slot" aria-hidden="true">Logo 03</div>
-      <div class="logo-slot" aria-hidden="true">Logo 04</div>
-      <div class="logo-slot" aria-hidden="true">Logo 05</div>
-      <div class="logo-slot" aria-hidden="true">Logo 06</div>
-      <div class="logo-slot" aria-hidden="true">Logo 07</div>
-      <div class="logo-slot" aria-hidden="true">Logo 08</div>
+      <div class="logo-slot" aria-hidden="true"><img src="assets/logos/Mercedes-Benz_Logo.svg" alt=""></div>
+      <div class="logo-slot" aria-hidden="true"><img src="assets/logos/ALEMAUTOS 2.png" alt=""></div>
+      <div class="logo-slot" aria-hidden="true"><img src="assets/logos/POBLAUTOS.png" alt=""></div>
+      <div class="logo-slot placeholder" aria-hidden="true">Smart</div>
+      <div class="logo-slot placeholder" aria-hidden="true">Everyplace</div>
+      <div class="logo-slot placeholder" aria-hidden="true">Chocolates Jumbo</div>
+      <div class="logo-slot placeholder" aria-hidden="true">Chocolates Jet</div>
+      <div class="logo-slot placeholder" aria-hidden="true">Logo +1</div>
     </div>
   </div>
 </section>
