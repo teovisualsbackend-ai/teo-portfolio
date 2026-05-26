@@ -560,7 +560,10 @@
       position: relative;
       mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
       -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
-      padding: 1rem 0;
+      padding: 1.5rem 0;
+      min-height: 130px;
+      display: flex;
+      align-items: center;
     }
     .marquee-track {
       display: flex;
@@ -578,7 +581,7 @@
     .logo-slot {
       flex: 0 0 auto;
       min-width: 170px;
-      height: 70px;
+      height: 110px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -599,8 +602,9 @@
     /* Opt-out: preserve original colors for color/special logos */
     .logo-slot.color img { filter: none; }
     /* Size overrides: logos with lots of canvas padding need to render bigger */
-    .logo-slot.lg img { max-height: 72px; max-width: 220px; }
-    .logo-slot.xl img { max-height: 88px; max-width: 260px; }
+    .logo-slot.lg img { max-height: 80px; max-width: 240px; }
+    .logo-slot.xl img { max-height: 110px; max-width: 320px; }
+    .logo-slot.xl { min-width: 220px; }
     .logo-slot.placeholder {
       border: 1px dashed var(--line-strong);
       border-radius: 8px;
