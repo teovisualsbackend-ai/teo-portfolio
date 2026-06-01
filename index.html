@@ -787,10 +787,22 @@
     .cta-title .struck {
       position: relative;
       color: rgba(255,255,255,0.25);
-      text-decoration: line-through;
-      text-decoration-thickness: 2px;
-      text-decoration-color: rgba(255,255,255,0.4);
       font-weight: 400;
+      display: inline-block;
+    }
+    /* Tachado diagonal */
+    .cta-title .struck::after {
+      content: '';
+      position: absolute;
+      left: -4%;
+      right: -4%;
+      top: 50%;
+      height: 2px;
+      background: rgba(255,255,255,0.55);
+      transform: rotate(-12deg);
+      transform-origin: center;
+      border-radius: 2px;
+      pointer-events: none;
     }
     .cta-title .word { color: #fff; }
 
@@ -917,11 +929,10 @@
 <nav id="nav">
   <a href="#hero" class="logo">TEO <span>VISUALS</span></a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#proyectos">Proyectos</a></li>
-    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="trabajos.html">Trabajos</a></li>
     <li><a href="#sobre">Sobre mí</a></li>
     <li><a href="#clientes">Clientes</a></li>
-    <li><a href="#recursos">Recursos</a></li>
+    <li><a href="#proceso">Proceso</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
@@ -939,180 +950,6 @@
     </p>
   </div>
   <div class="hero-scroll">Scroll ↓</div>
-</section>
-
-<!-- PROYECTOS -->
-<section id="proyectos" class="section-pad">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="section-num">01 — Proyectos</span>
-      <h2 class="section-title">Trabajo seleccionado</h2>
-    </div>
-
-    <div class="projects-grid">
-      <div class="project reveal">
-        <div class="project-thumb"><span class="project-thumb-text">REEL</span></div>
-        <div class="project-overlay">
-          <div class="project-info">
-            <div class="project-cat">Automotriz · Mercedes-Benz</div>
-            <div class="project-name">ALEMAUTOS × PAJÓN</div>
-          </div>
-        </div>
-      </div>
-      <div class="project reveal">
-        <div class="project-thumb">FILM</div>
-        <span class="project-placeholder-tag">Próximamente</span>
-        <div class="project-overlay">
-          <div class="project-info">
-            <div class="project-cat">Marca · Film</div>
-            <div class="project-name">PROYECTO 02</div>
-          </div>
-        </div>
-      </div>
-      <div class="project reveal">
-        <div class="project-thumb">CORP</div>
-        <span class="project-placeholder-tag">Próximamente</span>
-        <div class="project-overlay">
-          <div class="project-info">
-            <div class="project-cat">Corporativo · Video</div>
-            <div class="project-name">PROYECTO 03</div>
-          </div>
-        </div>
-      </div>
-      <div class="project reveal">
-        <div class="project-thumb">YT</div>
-        <span class="project-placeholder-tag">Próximamente</span>
-        <div class="project-overlay">
-          <div class="project-info">
-            <div class="project-cat">YouTube · Review</div>
-            <div class="project-name">PROYECTO 04</div>
-          </div>
-        </div>
-      </div>
-      <div class="project reveal">
-        <div class="project-thumb">REEL</div>
-        <span class="project-placeholder-tag">Próximamente</span>
-        <div class="project-overlay">
-          <div class="project-info">
-            <div class="project-cat">Producto · Reel</div>
-            <div class="project-name">PROYECTO 05</div>
-          </div>
-        </div>
-      </div>
-      <div class="project reveal">
-        <div class="project-thumb">SHOT</div>
-        <span class="project-placeholder-tag">Próximamente</span>
-        <div class="project-overlay">
-          <div class="project-info">
-            <div class="project-cat">Inmobiliario · Walkthrough</div>
-            <div class="project-name">PROYECTO 06</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="view-more-row reveal">
-      <a href="trabajos.html" class="view-more">Ver todos los trabajos →</a>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICIOS -->
-<section id="servicios" class="section-pad">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="section-num">02 — Servicios</span>
-    </div>
-
-    <div class="services-layout">
-
-      <!-- LEFT: title + toolbox -->
-      <div class="reveal">
-        <h2 class="services-title">
-          <span class="dim">Servicios que</span>
-          <span class="strong">elevan tu marca.</span>
-        </h2>
-
-        <div class="toolbox-block">
-          <div class="toolbox-label">Stack creativo</div>
-          <div class="toolbox-row">
-            <div class="tool-chip" title="Premiere Pro">Pr</div>
-            <div class="tool-chip" title="After Effects">Ae</div>
-            <div class="tool-chip" title="Photoshop">Ps</div>
-            <div class="tool-chip" title="DaVinci Resolve">Dv</div>
-            <div class="tool-chip" title="Lightroom">Lr</div>
-            <div class="tool-chip" title="Audition">Au</div>
-            <div class="tool-chip" title="Frame.io">F</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT: services list -->
-      <div class="services-list reveal">
-
-        <div class="service-row">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM18 10l3-2v8l-3-2z" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="service-body">
-            <div class="service-name">Planes mensuales</div>
-            <div class="service-desc">Contenido recurrente con estrategia. El núcleo del servicio.</div>
-          </div>
-        </div>
-
-        <div class="service-row">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="3" width="12" height="18" rx="2"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
-          </div>
-          <div class="service-body">
-            <div class="service-name">Reels & contenido corto</div>
-            <div class="service-desc">Vertical 15–60s. Criterio cinematográfico para redes.</div>
-          </div>
-        </div>
-
-        <div class="service-row">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l5-9 5 9-5 9z" stroke-linejoin="round"/><path d="M13 12l5-7 3 7-3 7z" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="service-body">
-            <div class="service-name">Videos corporativos</div>
-            <div class="service-desc">Institucionales, de proceso, casos B2B, marca empleadora.</div>
-          </div>
-        </div>
-
-        <div class="service-row">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 6.2a3 3 0 0 0-2.1-2.1C17.5 3.5 12 3.5 12 3.5s-5.5 0-7.4.6A3 3 0 0 0 2.5 6.2C2 8.1 2 12 2 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 7.4.6 7.4.6s5.5 0 7.4-.6a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM10 15.6V8.4l5.5 3.6L10 15.6z"/></svg>
-          </div>
-          <div class="service-body">
-            <div class="service-name">YouTube · Long-form</div>
-            <div class="service-desc">Reviews, recorridos, casos de éxito y contenido educativo.</div>
-          </div>
-        </div>
-
-        <div class="service-row">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="4"/><path d="M3 7h4l2-3h6l2 3h4v13H3z" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="service-body">
-            <div class="service-name">Fotografía complementaria</div>
-            <div class="service-desc">Producto, lifestyle y marca. Como complemento de producción.</div>
-          </div>
-        </div>
-
-        <div class="service-row">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4z"/><path d="M4 9h16M9 5v14"/></svg>
-          </div>
-          <div class="service-body">
-            <div class="service-name">Dirección creativa</div>
-            <div class="service-desc">Concepto, guión y supervisión de campañas y proyectos.</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- SECTORES -->
@@ -1250,56 +1087,6 @@
         <div class="step-name">OPTIMIZACIÓN</div>
         <div class="step-desc">Análisis mensual de resultados y mejora continua mes a mes.</div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- RECURSOS / PRESETS -->
-<section id="recursos">
-  <div class="container">
-    <div class="recursos-head reveal">
-      <h2 class="recursos-title">
-        <span class="dim">Recursos &</span>
-        <span>presets para creadores.</span>
-      </h2>
-      <a href="#" class="view-all">Ver tienda ↗</a>
-    </div>
-
-    <div class="recursos-grid">
-
-      <a href="#" class="recurso-card reveal">
-        <div class="recurso-thumb">
-          <span class="recurso-badge">Color · LUT</span>
-          <div class="recurso-art">LUT</div>
-        </div>
-        <div class="recurso-body">
-          <div class="recurso-name">Cinematic LUT Pack</div>
-          <div class="recurso-desc">10 LUTs cinematográficos listos para Premiere y DaVinci. Look usado en producciones reales.</div>
-        </div>
-      </a>
-
-      <a href="#" class="recurso-card reveal">
-        <div class="recurso-thumb">
-          <span class="recurso-badge">Preset · Lightroom</span>
-          <div class="recurso-art">PSE</div>
-        </div>
-        <div class="recurso-body">
-          <div class="recurso-name">Auto Editorial Presets</div>
-          <div class="recurso-desc">12 presets para fotografía automotriz. Look limpio, contraste controlado, tonos cinemáticos.</div>
-        </div>
-      </a>
-
-      <a href="#" class="recurso-card reveal">
-        <div class="recurso-thumb">
-          <span class="recurso-badge">Template · After Effects</span>
-          <div class="recurso-art">FX</div>
-        </div>
-        <div class="recurso-body">
-          <div class="recurso-name">Reel Title Templates</div>
-          <div class="recurso-desc">Plantillas tipográficas para reels e intros. Editables, sin marca de agua, render rápido.</div>
-        </div>
-      </a>
-
     </div>
   </div>
 </section>
