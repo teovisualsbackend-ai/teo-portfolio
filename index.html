@@ -305,6 +305,62 @@
       color: #000;
     }
 
+    /* ─── PROYECTOS (masonry irregular en home) ─── */
+    #proyectos { border-top: 1px solid var(--line); }
+    .hp-grid {
+      columns: 3;
+      column-gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 1000px) { .hp-grid { columns: 2; } }
+    @media (max-width: 600px)  { .hp-grid { columns: 1; } }
+
+    .hp-card {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #0c0c0c;
+      display: block;
+      cursor: pointer;
+    }
+    .hp-media { position: relative; width: 100%; display: block; background: #111; }
+    .hp-media img, .hp-media video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .hp-card.is-ph .hp-media { display: flex; align-items: center; justify-content: center; }
+    .hp-ph-mark {
+      font-family: 'Anton', sans-serif;
+      font-size: 2.2rem;
+      color: rgba(255,255,255,0.12);
+      letter-spacing: 0.08em;
+    }
+    .hp-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.05) 45%, rgba(0,0,0,0.2) 100%);
+      opacity: 0; transition: opacity 0.35s;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 1rem;
+    }
+    .hp-card:hover .hp-overlay { opacity: 1; }
+    .hp-badge {
+      align-self: flex-start;
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.28rem 0.65rem; background: rgba(0,0,0,0.55);
+      border: 1px solid var(--line-strong); border-radius: 999px; backdrop-filter: blur(8px);
+    }
+    .hp-bottom { transform: translateY(8px); transition: transform 0.35s; }
+    .hp-card:hover .hp-bottom { transform: translateY(0); }
+    .hp-cat { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.75; margin-bottom: 0.3rem; }
+    .hp-title { font-family: 'Anton', sans-serif; font-size: 1.05rem; letter-spacing: 0.04em; line-height: 1.05; }
+    .hp-orient {
+      position: absolute; top: 0.75rem; left: 0.75rem;
+      font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); z-index: 2; pointer-events: none; transition: opacity 0.3s;
+    }
+    .hp-card:hover .hp-orient { opacity: 0; }
+
     /* ─── SERVICIOS (Gakuyen-style) ─── */
     #servicios { border-top: 1px solid var(--line); }
 
@@ -929,9 +985,9 @@
 <nav id="nav">
   <a href="#hero" class="logo">TEO <span>VISUALS</span></a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="trabajos.html">Trabajos</a></li>
-    <li><a href="#sobre">Sobre mí</a></li>
     <li><a href="#clientes">Clientes</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#sobre">Sobre mí</a></li>
     <li><a href="#proceso">Proceso</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
@@ -952,40 +1008,46 @@
   <div class="hero-scroll">Scroll ↓</div>
 </section>
 
-<!-- SECTORES -->
-<section id="sectores" class="section-pad">
+<!-- CLIENTES -->
+<section id="clientes">
+  <div class="clientes-head reveal">
+    <div class="clientes-num">+ 100 CLIENTES</div>
+    <div class="clientes-label">Confiaron en nosotros desde 2020</div>
+  </div>
+
+  <!-- Marquee infinita: la lista se duplica en HTML para crear el loop -->
+  <div class="marquee reveal">
+    <div class="marquee-track">
+      <!-- Set 1 -->
+      <div class="logo-slot"><img src="assets/logos/Mercedes-Benz_Logo.svg" alt="Mercedes-Benz"></div>
+      <div class="logo-slot color xl"><img src="assets/logos/smart-logo-.png" alt="Smart"></div>
+      <div class="logo-slot lg"><img src="assets/logos/ALEMAUTOS 2.png" alt="Alemautos"></div>
+      <div class="logo-slot"><img src="assets/logos/POBLAUTOS.png" alt="Poblautos"></div>
+      <div class="logo-slot"><img src="assets/logos/Logo Everyplace.png" alt="Everyplace"></div>
+      <div class="logo-slot color"><img src="assets/logos/Jumbo.png" alt="Chocolates Jumbo"></div>
+      <div class="logo-slot color"><img src="assets/logos/Chocolatesjet.webp" alt="Chocolates Jet"></div>
+      <!-- Set 2 (duplicate for seamless loop) -->
+      <div class="logo-slot" aria-hidden="true"><img src="assets/logos/Mercedes-Benz_Logo.svg" alt=""></div>
+      <div class="logo-slot color xl" aria-hidden="true"><img src="assets/logos/smart-logo-.png" alt=""></div>
+      <div class="logo-slot lg" aria-hidden="true"><img src="assets/logos/ALEMAUTOS 2.png" alt=""></div>
+      <div class="logo-slot" aria-hidden="true"><img src="assets/logos/POBLAUTOS.png" alt=""></div>
+      <div class="logo-slot" aria-hidden="true"><img src="assets/logos/Logo Everyplace.png" alt=""></div>
+      <div class="logo-slot color" aria-hidden="true"><img src="assets/logos/Jumbo.png" alt=""></div>
+      <div class="logo-slot color" aria-hidden="true"><img src="assets/logos/Chocolatesjet.webp" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos" class="section-pad">
   <div class="container">
     <div class="section-head reveal">
-      <span class="section-num">03 — Sectores</span>
-      <h2 class="section-title">Dónde tenemos foco</h2>
+      <span class="section-num">02 — Proyectos</span>
+      <h2 class="section-title">Trabajo seleccionado</h2>
     </div>
-
-    <div class="sectores-list reveal">
-      <div class="sector">
-        <div class="sector-icon">01</div>
-        <div class="sector-name">AUTOMOTRIZ</div>
-        <div class="sector-desc">Concesionarios, marcas, talleres premium, PPF, performance, compraventa.</div>
-      </div>
-      <div class="sector">
-        <div class="sector-icon">02</div>
-        <div class="sector-name">INMOBILIARIO</div>
-        <div class="sector-desc">Agentes, constructoras, propiedades de lujo, proyectos, walkthroughs.</div>
-      </div>
-      <div class="sector">
-        <div class="sector-icon">03</div>
-        <div class="sector-name">CORPORATIVO</div>
-        <div class="sector-desc">Empresas B2B, industriales, manufactura, marcas con procesos complejos.</div>
-      </div>
-      <div class="sector">
-        <div class="sector-icon">04</div>
-        <div class="sector-name">PRODUCTO</div>
-        <div class="sector-desc">Decoración, moda, alimentos, café, belleza, productos premium, e-commerce.</div>
-      </div>
-      <div class="sector">
-        <div class="sector-icon">05</div>
-        <div class="sector-name">PREMIUM</div>
-        <div class="sector-desc">Clínicas estéticas, consultores, marcas personales, servicios especializados.</div>
-      </div>
+    <div class="hp-grid" id="hpGrid"></div>
+    <div class="view-more-row reveal">
+      <a href="trabajos.html" class="view-more">Ver todos los proyectos →</a>
     </div>
   </div>
 </section>
@@ -1019,36 +1081,6 @@
         <em>Creamos contenido pensado para atraer, generar confianza y apoyar tus objetivos comerciales.</em>
       </p>
       <div class="about-sig">Mateo Escobar · Teo Visuals</div>
-    </div>
-  </div>
-</section>
-
-<!-- CLIENTES -->
-<section id="clientes">
-  <div class="clientes-head reveal">
-    <div class="clientes-num">+ 100 CLIENTES</div>
-    <div class="clientes-label">Confiaron en nosotros desde 2020</div>
-  </div>
-
-  <!-- Marquee infinita: la lista se duplica en HTML para crear el loop -->
-  <div class="marquee reveal">
-    <div class="marquee-track">
-      <!-- Set 1 -->
-      <div class="logo-slot"><img src="assets/logos/Mercedes-Benz_Logo.svg" alt="Mercedes-Benz"></div>
-      <div class="logo-slot color xl"><img src="assets/logos/smart-logo-.png" alt="Smart"></div>
-      <div class="logo-slot lg"><img src="assets/logos/ALEMAUTOS 2.png" alt="Alemautos"></div>
-      <div class="logo-slot"><img src="assets/logos/POBLAUTOS.png" alt="Poblautos"></div>
-      <div class="logo-slot"><img src="assets/logos/Logo Everyplace.png" alt="Everyplace"></div>
-      <div class="logo-slot color"><img src="assets/logos/Jumbo.png" alt="Chocolates Jumbo"></div>
-      <div class="logo-slot color"><img src="assets/logos/Chocolatesjet.webp" alt="Chocolates Jet"></div>
-      <!-- Set 2 (duplicate for seamless loop) -->
-      <div class="logo-slot" aria-hidden="true"><img src="assets/logos/Mercedes-Benz_Logo.svg" alt=""></div>
-      <div class="logo-slot color xl" aria-hidden="true"><img src="assets/logos/smart-logo-.png" alt=""></div>
-      <div class="logo-slot lg" aria-hidden="true"><img src="assets/logos/ALEMAUTOS 2.png" alt=""></div>
-      <div class="logo-slot" aria-hidden="true"><img src="assets/logos/POBLAUTOS.png" alt=""></div>
-      <div class="logo-slot" aria-hidden="true"><img src="assets/logos/Logo Everyplace.png" alt=""></div>
-      <div class="logo-slot color" aria-hidden="true"><img src="assets/logos/Jumbo.png" alt=""></div>
-      <div class="logo-slot color" aria-hidden="true"><img src="assets/logos/Chocolatesjet.webp" alt=""></div>
     </div>
   </div>
 </section>
@@ -1156,6 +1188,47 @@
   document.querySelectorAll('.nav-links a').forEach(a => {
     a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
   });
+
+  /* ── Proyectos: masonry preview (mismo set que trabajos.html) ── */
+  const HP_WORKS = [
+    { title: 'Alemautos × Pajón', catLabel: 'Automotriz · Mercedes-Benz', orientation: 'horizontal', video: 'assets/videos/AlemautosXAndresPajon V4.mp4', poster: 'assets/thumbnails/01-alemautos-mercedes.jpg' },
+    { title: 'Reel automotriz',   catLabel: 'Automotriz · Reel',          orientation: 'vertical',   video: null, poster: null },
+    { title: 'Fashion film',      catLabel: 'Marca · Film',               orientation: 'horizontal', video: null, poster: null },
+    { title: 'Producto',          catLabel: 'Marca · Producto',           orientation: 'vertical',   video: null, poster: null },
+    { title: 'Video corporativo', catLabel: 'Corporativo · Institucional',orientation: 'horizontal', video: null, poster: null },
+    { title: 'Reel de marca',     catLabel: 'Marca · Reel',               orientation: 'vertical',   video: null, poster: null },
+  ];
+  const HP_RATIO = { vertical: '9 / 16', horizontal: '16 / 9' };
+  const hpGrid = document.getElementById('hpGrid');
+  if (hpGrid) {
+    HP_WORKS.forEach(w => {
+      const card = document.createElement('a');
+      card.className = 'hp-card' + (w.video || w.poster ? '' : ' is-ph');
+      card.href = 'trabajos.html';
+      const ratio = HP_RATIO[w.orientation] || '16 / 9';
+      const orient = w.orientation === 'vertical' ? 'Vertical' : 'Horizontal';
+      let inner;
+      if (w.video)       inner = `<video src="${w.video}" muted loop playsinline preload="metadata" ${w.poster?`poster="${w.poster}"`:''}></video>`;
+      else if (w.poster) inner = `<img src="${w.poster}" alt="${w.title}">`;
+      else               inner = `<span class="hp-ph-mark">${w.orientation==='vertical'?'9:16':'16:9'}</span>`;
+      card.innerHTML = `
+        <span class="hp-orient">${orient}</span>
+        <div class="hp-media" style="aspect-ratio:${ratio}">${inner}</div>
+        <div class="hp-overlay">
+          <span class="hp-badge">${orient}</span>
+          <div class="hp-bottom">
+            <div class="hp-cat">${w.catLabel}</div>
+            <div class="hp-title">${w.title}</div>
+          </div>
+        </div>`;
+      if (w.video) {
+        const v = card.querySelector('video');
+        card.addEventListener('mouseenter', () => v.play().catch(()=>{}));
+        card.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
+      }
+      hpGrid.appendChild(card);
+    });
+  }
 </script>
 </body>
 </html>
