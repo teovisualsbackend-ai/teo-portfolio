@@ -371,8 +371,6 @@
 <!-- FILTERS -->
 <div class="filters" id="filters">
   <button class="filter-btn active" data-filter="all">Todos</button>
-  <button class="filter-btn" data-filter="vertical">Verticales</button>
-  <button class="filter-btn" data-filter="horizontal">Horizontales</button>
   <button class="filter-btn" data-filter="automotriz">Automotriz</button>
   <button class="filter-btn" data-filter="marca">Marca</button>
   <button class="filter-btn" data-filter="corporativo">Corporativo</button>
@@ -459,13 +457,12 @@ WORKS.forEach((w, i) => {
   }
 
   card.innerHTML = `
-    <span class="orient-dot">${orientLabel}</span>
     <div class="card-media" style="aspect-ratio:${ratio}">
       ${mediaInner}
     </div>
     <div class="card-overlay">
       <div class="card-top">
-        <span class="badge">${orientLabel}</span>
+        <span class="badge">${w.catLabel}</span>
         ${w.video ? `<span class="play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>` : ''}
       </div>
       <div class="card-bottom">
