@@ -854,6 +854,8 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
+      text-align: center;
       width: 100%;
       max-width: 1500px;
     }
@@ -875,6 +877,7 @@
     .cta-title .row {
       display: flex;
       align-items: baseline;
+      justify-content: center;
       gap: 1.5rem;
       flex-wrap: wrap;
     }
@@ -901,14 +904,19 @@
     .cta-title .word { color: #fff; }
 
     .cta-info {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4rem;
       padding: 2rem 0;
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
       margin-bottom: 4rem;
+      width: 100%;
+      max-width: 700px;
+      flex-wrap: wrap;
     }
+    .cta-info-block { text-align: center; }
     .cta-info-block .label {
       font-size: 0.7rem;
       letter-spacing: 0.25em;
@@ -927,6 +935,7 @@
     .socials {
       display: flex;
       gap: 0.7rem;
+      justify-content: center;
     }
     .social-link {
       width: 42px; height: 42px;
@@ -1154,9 +1163,6 @@
     <h2 class="cta-title reveal">
       <div class="row">
         <span class="word">Hagamos</span>
-        <span class="struck">contenido</span>
-      </div>
-      <div class="row">
         <span class="struck">videos</span>
         <span class="word">algo increíble juntos.</span>
       </div>
