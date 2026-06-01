@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trabajos — Teo Visuals</title>
+  <meta name="description" content="Portafolio de trabajos audiovisuales de Teo Visuals — reels, fashion films, contenido automotriz y corporativo." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Anton&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --muted: #8a8a8a;
+      --line: rgba(255,255,255,0.08);
+      --line-strong: rgba(255,255,255,0.18);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+      transition: background 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .logo {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
+      line-height: 1;
+    }
+    .logo span { opacity: 0.5; }
+    .nav-back {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+    .nav-back:hover { opacity: 1; }
+
+    /* ─── HEADER ─── */
+    header.page-head {
+      padding: 9rem 2.5rem 3rem;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .head-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      margin-bottom: 1.5rem;
+    }
+    h1.head-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2.8rem, 9vw, 7rem);
+      letter-spacing: 0.02em;
+      line-height: 0.95;
+    }
+    h1.head-title .dim { color: rgba(255,255,255,0.3); }
+    .head-sub {
+      margin-top: 1.5rem;
+      max-width: 540px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ─── FILTERS ─── */
+    .filters {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 1.5rem 2.5rem 2.5rem;
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 50;
+      border-bottom: 1px solid var(--line);
+    }
+    .filter-btn {
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      opacity: 0.7;
+    }
+    .filter-btn:hover { opacity: 1; border-color: #fff; }
+    .filter-btn.active {
+      background: #fff;
+      color: #000;
+      opacity: 1;
+      border-color: #fff;
+    }
+
+    /* ─── MASONRY GRID ─── */
+    .grid {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 2.5rem 2.5rem 6rem;
+      columns: 4;
+      column-gap: 1rem;
+    }
+    @media (max-width: 1200px) { .grid { columns: 3; } }
+    @media (max-width: 800px)  { .grid { columns: 2; } }
+    @media (max-width: 520px)  { .grid { columns: 1; } }
+
+    .card {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #0c0c0c;
+      cursor: pointer;
+      display: block;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .card.in { opacity: 1; transform: translateY(0); }
+    .card.hidden { display: none; }
+
+    .card-media {
+      position: relative;
+      width: 100%;
+      display: block;
+      background: #111;
+    }
+    .card-media img,
+    .card-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* placeholder gradients for empty slots */
+    .card.is-placeholder .card-media {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ph-mark {
+      font-family: 'Anton', sans-serif;
+      font-size: 2.5rem;
+      color: rgba(255,255,255,0.12);
+      letter-spacing: 0.08em;
+    }
+
+    /* overlay */
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.05) 45%, rgba(0,0,0,0.2) 100%);
+      opacity: 0;
+      transition: opacity 0.35s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1rem;
+    }
+    .card:hover .card-overlay { opacity: 1; }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .badge {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.65rem;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+    }
+    .play-icon {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.4);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .play-icon svg { width: 14px; height: 14px; margin-left: 2px; }
+
+    .card-bottom {
+      transform: translateY(8px);
+      transition: transform 0.35s;
+    }
+    .card:hover .card-bottom { transform: translateY(0); }
+    .card-cat {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 0.3rem;
+    }
+    .card-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      line-height: 1.05;
+    }
+
+    /* small corner orientation tag always visible (subtle) */
+    .orient-dot {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      z-index: 2;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .card:hover .orient-dot { opacity: 0; }
+
+    /* ─── LIGHTBOX ─── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.96);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      position: relative;
+      max-width: 90vw;
+      max-height: 88vh;
+      cursor: default;
+    }
+    .lightbox video, .lightbox img {
+      max-width: 90vw;
+      max-height: 88vh;
+      border-radius: 8px;
+      box-shadow: 0 0 80px rgba(0,0,0,0.7);
+      display: block;
+    }
+    .lb-close {
+      position: absolute;
+      top: -2.8rem;
+      right: 0;
+      background: transparent;
+      border: 1px solid var(--line-strong);
+      color: #fff;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+    .lb-close:hover { background: #fff; color: #000; }
+    .lb-caption {
+      position: absolute;
+      bottom: -2.5rem;
+      left: 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── EMPTY / CTA ─── */
+    .grid-cta {
+      text-align: center;
+      padding: 4rem 2rem 7rem;
+      border-top: 1px solid var(--line);
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .grid-cta h3 {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      margin-bottom: 1.5rem;
+    }
+    .grid-cta a {
+      display: inline-block;
+      padding: 0.9rem 2.5rem;
+      border: 1px solid var(--line-strong);
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .grid-cta a:hover { background: #fff; color: #000; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      opacity: 0.5;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer span { text-transform: uppercase; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      header.page-head { padding: 7rem 1.5rem 2rem; }
+      .filters { padding: 1rem 1.5rem 1.5rem; }
+      .grid { padding: 1.5rem 1.5rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="logo">TEO <span>VISUALS</span></a>
+  <a href="index.html" class="nav-back">← Volver al inicio</a>
+</nav>
+
+<!-- HEADER -->
+<header class="page-head">
+  <div class="head-eyebrow">— Portafolio completo</div>
+  <h1 class="head-title">TRABAJOS <span class="dim">&amp; PROYECTOS</span></h1>
+  <p class="head-sub">
+    Una selección de reels, fashion films y contenido para marcas. Formatos verticales y horizontales, producidos desde Medellín.
+  </p>
+</header>
+
+<!-- FILTERS -->
+<div class="filters" id="filters">
+  <button class="filter-btn active" data-filter="all">Todos</button>
+  <button class="filter-btn" data-filter="vertical">Verticales</button>
+  <button class="filter-btn" data-filter="horizontal">Horizontales</button>
+  <button class="filter-btn" data-filter="automotriz">Automotriz</button>
+  <button class="filter-btn" data-filter="marca">Marca</button>
+  <button class="filter-btn" data-filter="corporativo">Corporativo</button>
+</div>
+
+<!-- GRID -->
+<div class="grid" id="grid"></div>
+
+<!-- CTA -->
+<div class="grid-cta">
+  <h3>¿Tienes un proyecto en mente?</h3>
+  <a href="index.html#contacto">Hablemos →</a>
+</div>
+
+<footer>
+  <span>© 2026 Teo Visuals</span>
+  <span>Medellín, Colombia</span>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner" id="lbInner" onclick="event.stopPropagation()">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <div id="lbMedia"></div>
+    <div class="lb-caption" id="lbCaption"></div>
+  </div>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────
+   CATÁLOGO DE TRABAJOS
+   Para añadir un video nuevo:
+   1. Pon el .mp4 en assets/videos/ y un poster en assets/thumbnails/
+   2. Copia un objeto aquí abajo y rellena los campos
+   - orientation: 'vertical' (9:16) | 'horizontal' (16:9)
+   - cat: 'automotriz' | 'marca' | 'corporativo' (para el filtro)
+   - video: ruta al mp4 (o null si solo hay poster por ahora)
+   - poster: ruta a la imagen
+───────────────────────────────────────────── */
+const WORKS = [
+  {
+    title: 'Alemautos × Pajón',
+    cat: 'automotriz',
+    catLabel: 'Automotriz · Mercedes-Benz',
+    orientation: 'horizontal',
+    video: 'assets/videos/AlemautosXAndresPajon V4.mp4',
+    poster: 'assets/thumbnails/01-alemautos-mercedes.jpg',
+  },
+  // ── Placeholders: reemplaza por trabajos reales ──
+  { title: 'Reel automotriz', cat: 'automotriz', catLabel: 'Automotriz · Reel', orientation: 'vertical', video: null, poster: null },
+  { title: 'Fashion film', cat: 'marca', catLabel: 'Marca · Film', orientation: 'horizontal', video: null, poster: null },
+  { title: 'Producto', cat: 'marca', catLabel: 'Marca · Producto', orientation: 'vertical', video: null, poster: null },
+  { title: 'Video corporativo', cat: 'corporativo', catLabel: 'Corporativo · Institucional', orientation: 'horizontal', video: null, poster: null },
+  { title: 'Reel de marca', cat: 'marca', catLabel: 'Marca · Reel', orientation: 'vertical', video: null, poster: null },
+  { title: 'Test drive', cat: 'automotriz', catLabel: 'Automotriz · YouTube', orientation: 'horizontal', video: null, poster: null },
+  { title: 'Behind the scenes', cat: 'corporativo', catLabel: 'Corporativo · BTS', orientation: 'vertical', video: null, poster: null },
+  { title: 'Lanzamiento', cat: 'marca', catLabel: 'Marca · Campaña', orientation: 'horizontal', video: null, poster: null },
+  { title: 'Entrega de vehículo', cat: 'automotriz', catLabel: 'Automotriz · Reel', orientation: 'vertical', video: null, poster: null },
+];
+
+const grid = document.getElementById('grid');
+
+/* aspect ratios per orientation for layout heights */
+const RATIO = { vertical: '9 / 16', horizontal: '16 / 9' };
+
+WORKS.forEach((w, i) => {
+  const card = document.createElement('a');
+  card.className = 'card' + (w.video || w.poster ? '' : ' is-placeholder');
+  card.dataset.cat = w.cat;
+  card.dataset.orientation = w.orientation;
+  card.style.setProperty('--i', i);
+
+  const ratio = RATIO[w.orientation] || '16 / 9';
+  const orientLabel = w.orientation === 'vertical' ? 'Vertical' : 'Horizontal';
+
+  let mediaInner;
+  if (w.video) {
+    mediaInner = `<video src="${w.video}" muted loop playsinline preload="metadata"
+                    ${w.poster ? `poster="${w.poster}"` : ''}></video>`;
+  } else if (w.poster) {
+    mediaInner = `<img src="${w.poster}" alt="${w.title}">`;
+  } else {
+    mediaInner = `<span class="ph-mark">${w.orientation === 'vertical' ? '9:16' : '16:9'}</span>`;
+  }
+
+  card.innerHTML = `
+    <span class="orient-dot">${orientLabel}</span>
+    <div class="card-media" style="aspect-ratio:${ratio}">
+      ${mediaInner}
+    </div>
+    <div class="card-overlay">
+      <div class="card-top">
+        <span class="badge">${orientLabel}</span>
+        ${w.video ? `<span class="play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>` : ''}
+      </div>
+      <div class="card-bottom">
+        <div class="card-cat">${w.catLabel}</div>
+        <div class="card-title">${w.title}</div>
+      </div>
+    </div>
+  `;
+
+  // hover-play for videos
+  if (w.video) {
+    const vid = card.querySelector('video');
+    card.addEventListener('mouseenter', () => { vid.play().catch(()=>{}); });
+    card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
+    card.addEventListener('click', (e) => { e.preventDefault(); openLightbox(w); });
+  } else {
+    card.addEventListener('click', (e) => e.preventDefault());
+  }
+
+  grid.appendChild(card);
+});
+
+/* ─── FILTERS ─── */
+const filterBtns = document.querySelectorAll('.filter-btn');
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('.card').forEach(card => {
+      const match = f === 'all'
+        || card.dataset.orientation === f
+        || card.dataset.cat === f;
+      card.classList.toggle('hidden', !match);
+    });
+  });
+});
+
+/* ─── LIGHTBOX ─── */
+const lightbox = document.getElementById('lightbox');
+const lbMedia = document.getElementById('lbMedia');
+const lbCaption = document.getElementById('lbCaption');
+
+function openLightbox(w) {
+  if (w.video) {
+    lbMedia.innerHTML = `<video src="${w.video}" controls autoplay loop playsinline
+                          ${w.poster ? `poster="${w.poster}"` : ''}
+                          style="aspect-ratio:${RATIO[w.orientation]}"></video>`;
+  } else if (w.poster) {
+    lbMedia.innerHTML = `<img src="${w.poster}" alt="${w.title}">`;
+  }
+  lbCaption.textContent = `${w.catLabel} — ${w.title}`;
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  lbMedia.innerHTML = '';
+  document.body.style.overflow = '';
+}
+lightbox.addEventListener('click', closeLightbox);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+/* ─── NAV scroll + reveal ─── */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.card').forEach(c => io.observe(c));
+</script>
+</body>
+</html>
