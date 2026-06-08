@@ -19,7 +19,7 @@ await page.evaluate(() => document.querySelectorAll('.reveal').forEach(e => e.cl
 await page.addStyleTag({ content: '.marquee-track{animation-play-state:paused!important} *{scroll-behavior:auto!important}' });
 await page.waitForTimeout(500);
 
-const sections = ['hero', 'clientes', 'sobre', 'trabajos', 'proceso', 'contacto'];
+const sections = ['hero', 'clientes', 'trabajos', 'contacto'];
 
 for (const id of sections) {
   const el = await page.$('#' + id);
