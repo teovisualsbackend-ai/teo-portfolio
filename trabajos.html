@@ -374,6 +374,7 @@
   <button class="filter-btn" data-filter="automotriz">Automotriz</button>
   <button class="filter-btn" data-filter="marca">Marca</button>
   <button class="filter-btn" data-filter="corporativo">Corporativo</button>
+  <button class="filter-btn" data-filter="eventos">Eventos</button>
 </div>
 
 <!-- GRID -->
@@ -411,24 +412,27 @@
    - poster: ruta a la imagen
 ───────────────────────────────────────────── */
 const WORKS = [
-  {
-    title: 'Alemautos × Pajón',
-    cat: 'automotriz',
-    catLabel: 'Automotriz · Mercedes-Benz',
-    orientation: 'horizontal',
-    video: 'assets/videos/AlemautosXAndresPajon V4.mp4',
-    poster: 'assets/thumbnails/01-alemautos-mercedes.jpg',
-  },
-  // ── Placeholders: reemplaza por trabajos reales ──
-  { title: 'Reel automotriz', cat: 'automotriz', catLabel: 'Automotriz · Reel', orientation: 'vertical', video: null, poster: null },
-  { title: 'Fashion film', cat: 'marca', catLabel: 'Marca · Film', orientation: 'horizontal', video: null, poster: null },
-  { title: 'Producto', cat: 'marca', catLabel: 'Marca · Producto', orientation: 'vertical', video: null, poster: null },
-  { title: 'Video corporativo', cat: 'corporativo', catLabel: 'Corporativo · Institucional', orientation: 'horizontal', video: null, poster: null },
-  { title: 'Reel de marca', cat: 'marca', catLabel: 'Marca · Reel', orientation: 'vertical', video: null, poster: null },
-  { title: 'Test drive', cat: 'automotriz', catLabel: 'Automotriz · YouTube', orientation: 'horizontal', video: null, poster: null },
-  { title: 'Behind the scenes', cat: 'corporativo', catLabel: 'Corporativo · BTS', orientation: 'vertical', video: null, poster: null },
-  { title: 'Lanzamiento', cat: 'marca', catLabel: 'Marca · Campaña', orientation: 'horizontal', video: null, poster: null },
-  { title: 'Entrega de vehículo', cat: 'automotriz', catLabel: 'Automotriz · Reel', orientation: 'vertical', video: null, poster: null },
+  { title: 'Alemautos × Pajón',        cat: 'automotriz',  catLabel: 'Automotriz · Mercedes-Benz', orientation: 'horizontal', video: 'assets/videos/AlemautosXAndresPajon V4.mp4', poster: 'assets/posters/AlemautosXAndresPajon V4.jpg' },
+  { title: 'Alemautos Institucional',  cat: 'corporativo', catLabel: 'Corporativo · Institucional', orientation: 'horizontal', video: 'assets/videos/Alemautos Institucional.mp4', poster: 'assets/posters/Alemautos Institucional.jpg' },
+  { title: 'Defender',                 cat: 'automotriz',  catLabel: 'Automotriz · Reel',          orientation: 'vertical',   video: 'assets/videos/Defender V6.mp4', poster: 'assets/posters/Defender V6.jpg' },
+  { title: 'Entrega G580',             cat: 'automotriz',  catLabel: 'Automotriz · Entrega',       orientation: 'vertical',   video: 'assets/videos/Entrega G580 V5.mp4', poster: 'assets/posters/Entrega G580 V5.jpg' },
+  { title: 'Entrega RR West',          cat: 'automotriz',  catLabel: 'Automotriz · Entrega',       orientation: 'vertical',   video: 'assets/videos/Entrega RR West V2.mp4', poster: 'assets/posters/Entrega RR West V2.jpg' },
+  { title: 'GT3 × 458',                cat: 'automotriz',  catLabel: 'Automotriz · Reel',          orientation: 'vertical',   video: 'assets/videos/GT3 x 458 V2.mp4', poster: 'assets/posters/GT3 x 458 V2.jpg' },
+  { title: 'BMW 128ti Built',          cat: 'automotriz',  catLabel: 'Automotriz · Build',         orientation: 'vertical',   video: 'assets/videos/Copia de 128ti Built V1.mp4', poster: 'assets/posters/Copia de 128ti Built V1.jpg' },
+  { title: 'Lexus 570 Supersport',     cat: 'automotriz',  catLabel: 'Automotriz · Reel',          orientation: 'vertical',   video: 'assets/videos/Lexus 570 Supersport mbs V1.mp4', poster: 'assets/posters/Lexus 570 Supersport mbs V1.jpg' },
+  { title: 'Poblautos Blindaje',       cat: 'automotriz',  catLabel: 'Automotriz · Blindaje',      orientation: 'horizontal', video: 'assets/videos/Poblautos Blindaje_2.mp4', poster: 'assets/posters/Poblautos Blindaje_2.jpg' },
+  { title: 'Smart · PR Night',         cat: 'automotriz',  catLabel: 'Automotriz · PR',            orientation: 'vertical',   video: 'assets/videos/Smart PR x Night V3.mp4', poster: 'assets/posters/Smart PR x Night V3.jpg' },
+  { title: 'Smart · Pilot Assist',     cat: 'automotriz',  catLabel: 'Automotriz · Feature',       orientation: 'vertical',   video: 'assets/videos/Smart pilot assist V2.mp4', poster: 'assets/posters/Smart pilot assist V2.jpg' },
+  { title: 'Branding',                 cat: 'marca',       catLabel: 'Marca · Branding',           orientation: 'vertical',   video: 'assets/videos/Branding V2.mp4', poster: 'assets/posters/Branding V2.jpg' },
+  { title: 'Cerro Vento',              cat: 'marca',       catLabel: 'Marca · Lifestyle',          orientation: 'vertical',   video: 'assets/videos/Cerrovento V2.mp4', poster: 'assets/posters/Cerrovento V2.jpg' },
+  { title: 'Podium',                   cat: 'marca',       catLabel: 'Marca · Reel',               orientation: 'horizontal', video: 'assets/videos/Podium V2.mp4', poster: 'assets/posters/Podium V2.jpg' },
+  { title: 'Emprestur Corporate',      cat: 'corporativo', catLabel: 'Corporativo · Institucional', orientation: 'horizontal', video: 'assets/videos/Emprestur Corporate_3.mp4', poster: 'assets/posters/Emprestur Corporate_3.jpg' },
+  { title: 'Crédito',                  cat: 'corporativo', catLabel: 'Corporativo · Financiero',   orientation: 'vertical',   video: 'assets/videos/Credito V1.mp4', poster: 'assets/posters/Credito V1.jpg' },
+  { title: 'Guía Colinas de Paimado',  cat: 'corporativo', catLabel: 'Corporativo · Guía',         orientation: 'vertical',   video: 'assets/videos/Guia Colinas de Paimado V3.mp4', poster: 'assets/posters/Guia Colinas de Paimado V3.jpg' },
+  { title: 'Día de la Familia 2025',   cat: 'eventos',     catLabel: 'Eventos · Corporativo',      orientation: 'horizontal', video: 'assets/videos/Día de la familia 2025 V3.mp4', poster: 'assets/posters/Día de la familia 2025 V3.jpg' },
+  { title: 'Jumbo Stars 2024',         cat: 'eventos',     catLabel: 'Eventos · Marca',            orientation: 'horizontal', video: 'assets/videos/Jumbo Stars 2024.mp4', poster: 'assets/posters/Jumbo Stars 2024.jpg' },
+  { title: 'La Solar 2024',            cat: 'eventos',     catLabel: 'Eventos · Festival',         orientation: 'vertical',   video: 'assets/videos/La Solar 2024 V4.mp4', poster: 'assets/posters/La Solar 2024 V4.jpg' },
+  { title: 'Jueves · Recap',           cat: 'eventos',     catLabel: 'Eventos · Recap',            orientation: 'vertical',   video: 'assets/videos/Jueves recap artistas, personas.mp4', poster: 'assets/posters/Jueves recap artistas, personas.jpg' },
 ];
 
 const grid = document.getElementById('grid');
