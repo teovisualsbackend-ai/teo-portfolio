@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://teo-portfolios.vercel.app/sitemap.xml
+Sitemap: https://teo-portfolio-sigma.vercel.app/sitemap.xml
