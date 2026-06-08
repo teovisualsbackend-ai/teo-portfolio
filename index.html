@@ -305,55 +305,35 @@
       color: #000;
     }
 
-    /* ─── TRABAJOS (masonry irregular en home, sin texto) ─── */
+    /* ─── TRABAJOS (video destacado + botón) ─── */
     #trabajos { border-top: 1px solid var(--line); }
 
-    .hp-filters {
-      display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem;
-    }
-    .hp-fbtn {
-      padding: 0.45rem 1.1rem; border-radius: 999px; border: 1px solid var(--line-strong);
-      background: transparent; color: #fff; font-family: inherit; font-size: 0.72rem; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; opacity: 0.65; transition: all 0.2s;
-    }
-    .hp-fbtn:hover { opacity: 1; border-color: #fff; }
-    .hp-fbtn.active { background: #fff; color: #000; opacity: 1; border-color: #fff; }
-
-    .hp-grid {
-      columns: 3;
-      column-gap: 1rem;
-    }
-    @media (max-width: 1000px) { .hp-grid { columns: 2; } }
-    @media (max-width: 600px)  { .hp-grid { columns: 1; } }
-
-    .hp-card {
-      break-inside: avoid;
-      margin-bottom: 1rem;
+    .feat-video {
       position: relative;
-      border-radius: 10px;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
       overflow: hidden;
       background: #0c0c0c;
-      display: block;
       cursor: pointer;
     }
-    .hp-card.hidden { display: none; }
-    .hp-media { position: relative; width: 100%; display: block; background: #111; }
-    .hp-media video {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
-    /* Afordancia de play (sin nombres ni descripciones) */
-    .hp-play {
+    .feat-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .feat-play {
       position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(to top, rgba(0,0,0,0.35), rgba(0,0,0,0.05));
-      opacity: 0; transition: opacity 0.3s; pointer-events: none;
+      background: linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0.05));
+      transition: opacity 0.3s; pointer-events: none;
     }
-    .hp-card:hover .hp-play { opacity: 1; }
-    .hp-play .circle {
-      width: 52px; height: 52px; border-radius: 50%;
-      background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.55);
+    .feat-video.playing .feat-play { opacity: 0; }
+    .feat-play .circle {
+      width: 76px; height: 76px; border-radius: 50%;
+      background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.6);
       display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px);
+      transition: transform 0.2s, background 0.2s;
     }
-    .hp-play svg { width: 18px; height: 18px; margin-left: 3px; fill: #fff; }
+    .feat-video:hover .feat-play .circle { transform: scale(1.08); background: rgba(0,0,0,0.55); }
+    .feat-play svg { width: 26px; height: 26px; margin-left: 4px; fill: #fff; }
+
+    .feat-cta { display: flex; justify-content: center; margin-top: 3rem; }
 
     /* Lightbox */
     .hp-lb {
@@ -1035,7 +1015,7 @@
   <a href="#hero" class="logo">TEO <span>VISUALS</span></a>
   <ul class="nav-links" id="navLinks">
     <li><a href="#clientes">Clientes</a></li>
-    <li><a href="#trabajos">Proyectos</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
     <li><a href="#sobre">Sobre mí</a></li>
     <li><a href="#proceso">Proceso</a></li>
     <li><a href="#contacto">Contacto</a></li>
@@ -1118,18 +1098,19 @@
   <div class="container">
     <div class="section-head reveal">
       <span class="section-num">04 — Trabajos</span>
-      <h2 class="section-title">Proyectos</h2>
+      <h2 class="section-title">Proyecto destacado</h2>
     </div>
 
-    <div class="hp-filters reveal" id="hpFilters">
-      <button class="hp-fbtn active" data-f="all">Todos</button>
-      <button class="hp-fbtn" data-f="automotriz">Automotriz</button>
-      <button class="hp-fbtn" data-f="marca">Marca</button>
-      <button class="hp-fbtn" data-f="corporativo">Corporativo</button>
-      <button class="hp-fbtn" data-f="eventos">Eventos</button>
+    <div class="feat-video reveal" id="featVideo">
+      <video src="assets/videos/AlemautosXAndresPajon V4.mp4"
+             poster="assets/posters/AlemautosXAndresPajon V4.jpg"
+             muted loop playsinline preload="none"></video>
+      <div class="feat-play"><div class="circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
     </div>
 
-    <div class="hp-grid" id="hpGrid"></div>
+    <div class="feat-cta reveal">
+      <a href="proyectos.html" class="view-more">Explorar el portafolio →</a>
+    </div>
   </div>
 </section>
 
@@ -1239,54 +1220,16 @@
     a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
   });
 
-  /* ── Trabajos: grid masonry (orden por ranking, sin texto) ── */
-  const TRABAJOS = [
-    { cat:'automotriz',  o:'horizontal', v:'assets/videos/AlemautosXAndresPajon V4.mp4', p:'assets/posters/AlemautosXAndresPajon V4.jpg' },
-    { cat:'corporativo', o:'horizontal', v:'assets/videos/Alemautos Institucional.mp4', p:'assets/posters/Alemautos Institucional.jpg' },
-    { cat:'eventos',     o:'horizontal', v:'assets/videos/Jumbo Stars 2024.mp4', p:'assets/posters/Jumbo Stars 2024.jpg' },
-    { cat:'automotriz',  o:'vertical',   v:'assets/videos/Defender V6.mp4', p:'assets/posters/Defender V6.jpg' },
-    { cat:'automotriz',  o:'vertical',   v:'assets/videos/Entrega G580 V5.mp4', p:'assets/posters/Entrega G580 V5.jpg' },
-    { cat:'automotriz',  o:'vertical',   v:'assets/videos/Entrega RR West V2.mp4', p:'assets/posters/Entrega RR West V2.jpg' },
-    { cat:'automotriz',  o:'horizontal', v:'assets/videos/Poblautos Blindaje_2.mp4', p:'assets/posters/Poblautos Blindaje_2.jpg' },
-    { cat:'eventos',     o:'vertical',   v:'assets/videos/Jueves recap artistas, personas.mp4', p:'assets/posters/Jueves recap artistas, personas.jpg' },
-    { cat:'automotriz',  o:'vertical',   v:'assets/videos/GT3 x 458 V2.mp4', p:'assets/posters/GT3 x 458 V2.jpg' },
-    { cat:'automotriz',  o:'vertical',   v:'assets/videos/Copia de 128ti Built V1.mp4', p:'assets/posters/Copia de 128ti Built V1.jpg' },
-    { cat:'automotriz',  o:'vertical',   v:'assets/videos/Smart PR x Night V3.mp4', p:'assets/posters/Smart PR x Night V3.jpg' },
-    { cat:'marca',       o:'vertical',   v:'assets/videos/Cerrovento V2.mp4', p:'assets/posters/Cerrovento V2.jpg' },
-    { cat:'marca',       o:'horizontal', v:'assets/videos/Podium V2.mp4', p:'assets/posters/Podium V2.jpg' },
-    { cat:'corporativo', o:'horizontal', v:'assets/videos/Emprestur Corporate_3.mp4', p:'assets/posters/Emprestur Corporate_3.jpg' },
-    { cat:'corporativo', o:'vertical',   v:'assets/videos/Guia Colinas de Paimado V3.mp4', p:'assets/posters/Guia Colinas de Paimado V3.jpg' },
-    { cat:'eventos',     o:'vertical',   v:'assets/videos/La Solar 2024 V4.mp4', p:'assets/posters/La Solar 2024 V4.jpg' },
-    { cat:'automotriz',  o:'vertical',   v:'assets/videos/Smart pilot assist V2.mp4', p:'assets/posters/Smart pilot assist V2.jpg' },
-    { cat:'corporativo', o:'vertical',   v:'assets/videos/Credito V1.mp4', p:'assets/posters/Credito V1.jpg' },
-  ];
-  const RATIO = { vertical:'9 / 16', horizontal:'16 / 9' };
-  const hpGrid = document.getElementById('hpGrid');
-  TRABAJOS.forEach(t => {
-    const card = document.createElement('div');
-    card.className = 'hp-card';
-    card.dataset.cat = t.cat;
-    card.innerHTML = `
-      <div class="hp-media" style="aspect-ratio:${RATIO[t.o]}">
-        <video src="${t.v}" poster="${t.p}" muted loop playsinline preload="none"></video>
-        <div class="hp-play"><div class="circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-      </div>`;
-    const vid = card.querySelector('video');
-    card.addEventListener('mouseenter', () => vid.play().catch(()=>{}));
-    card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
-    card.addEventListener('click', () => openHpLb(t.v, t.p));
-    hpGrid.appendChild(card);
-  });
-
-  // Filtros
-  document.querySelectorAll('.hp-fbtn').forEach(b => b.addEventListener('click', () => {
-    document.querySelectorAll('.hp-fbtn').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    const f = b.dataset.f;
-    document.querySelectorAll('.hp-card').forEach(c => {
-      c.classList.toggle('hidden', !(f === 'all' || c.dataset.cat === f));
-    });
-  }));
+  /* ── Trabajos: video destacado (Alemautos × Pajón) ── */
+  const FEAT_SRC = 'assets/videos/AlemautosXAndresPajon V4.mp4';
+  const FEAT_POSTER = 'assets/posters/AlemautosXAndresPajon V4.jpg';
+  const featVideo = document.getElementById('featVideo');
+  if (featVideo) {
+    const fv = featVideo.querySelector('video');
+    featVideo.addEventListener('mouseenter', () => fv.play().catch(()=>{}));
+    featVideo.addEventListener('mouseleave', () => { fv.pause(); fv.currentTime = 0; });
+    featVideo.addEventListener('click', () => openHpLb(FEAT_SRC, FEAT_POSTER));
+  }
 
   // Lightbox
   const hpLb = document.getElementById('hpLb');
