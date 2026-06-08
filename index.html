@@ -655,6 +655,20 @@
       display: flex;
       align-items: center;
     }
+    /* En móvil: scroll horizontal manual (swipe) en vez de animación */
+    @media (max-width: 768px) {
+      .marquee {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        scroll-snap-type: x proximity;
+        mask-image: none;
+        -webkit-mask-image: none;
+      }
+      .marquee::-webkit-scrollbar { display: none; }
+      .marquee-track { animation: none; }
+      .logo-slot { scroll-snap-align: center; }
+    }
     .marquee-track {
       display: flex;
       gap: 4rem;
@@ -997,6 +1011,7 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       user-select: none;
+      pointer-events: none;
     }
 
     /* ─── FOOTER ─── */
