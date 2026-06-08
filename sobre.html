@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre mí — Teo Visuals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Anton&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#000; --text:#fff; --muted:#8a8a8a;
+      --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.18);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--text); font-family:'Inter',system-ui,sans-serif; font-weight:300; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+    a { color:inherit; text-decoration:none; }
+
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100; padding:1.5rem 2.5rem;
+      display:flex; justify-content:space-between; align-items:center;
+      background:linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); transition:background 0.3s;
+    }
+    nav.scrolled { background:rgba(0,0,0,0.9); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
+    .logo { font-family:'Anton',sans-serif; font-size:1.4rem; letter-spacing:0.12em; line-height:1; }
+    .logo span { opacity:0.5; }
+    .nav-back { font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0.85; transition:opacity 0.2s; }
+    .nav-back:hover { opacity:1; }
+
+    .wrap { min-height:100vh; display:flex; align-items:center; padding:8rem 2.5rem 5rem; }
+    .about-grid { display:grid; grid-template-columns:0.85fr 1fr; gap:5rem; max-width:1300px; margin:0 auto; align-items:center; width:100%; }
+    .about-photo { position:relative; aspect-ratio:3/4; overflow:hidden; border-radius:4px; }
+    .about-photo img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; filter:grayscale(0.15) contrast(1.05); transition:filter 0.5s; }
+    .about-photo:hover img { filter:grayscale(0) contrast(1); }
+
+    .about-eyebrow { font-size:0.78rem; letter-spacing:0.3em; text-transform:uppercase; opacity:0.5; margin-bottom:1.5rem; }
+    .about-title { font-family:'Anton',sans-serif; font-size:clamp(2rem,4.5vw,3.5rem); letter-spacing:0.01em; line-height:1.05; margin-bottom:2rem; }
+    .about-title .dim { color:rgba(255,255,255,0.35); display:block; }
+    .about-text p { color:var(--muted); font-size:0.98rem; line-height:1.75; margin-bottom:1rem; max-width:540px; }
+    .about-text p strong { color:#fff; font-weight:500; }
+
+    footer { border-top:1px solid var(--line); padding:2rem 2.5rem; display:flex; justify-content:space-between; font-size:0.75rem; letter-spacing:0.1em; opacity:0.5; flex-wrap:wrap; gap:1rem; }
+    footer span { text-transform:uppercase; }
+
+    @media (max-width:900px){
+      nav{padding:1.2rem 1.5rem;}
+      .wrap{padding:7rem 1.5rem 3rem;}
+      .about-grid{grid-template-columns:1fr; gap:2.5rem;}
+      .about-photo{max-width:360px;}
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="logo">TEO <span>VISUALS</span></a>
+  <a href="index.html" class="nav-back">← Volver al inicio</a>
+</nav>
+
+<div class="wrap">
+  <div class="about-grid">
+    <div class="about-photo">
+      <img src="assets/about/teo-cerrovento-gimbal.jpg" alt="Mateo Escobar grabando en Cerro Vento, Medellín">
+    </div>
+
+    <div class="about-body">
+      <div class="about-eyebrow">— Sobre mí</div>
+      <h2 class="about-title">
+        <span class="dim">Detrás de cada video,</span>
+        <span>una intención clara.</span>
+      </h2>
+
+      <div class="about-text">
+        <p>
+          Soy <strong>Mateo Escobar</strong>, videógrafo y director creativo basado en <strong>Medellín</strong>. Llevo desde 2020 produciendo contenido para marcas, con foco en el sector automotriz, inmobiliario y corporativo.
+        </p>
+        <p>
+          Mi trabajo no es solo grabar y editar. Es <strong>entender qué necesita comunicar tu marca</strong> y construir las piezas audiovisuales que lo hagan posible — con criterio cinematográfico y mentalidad de resultados.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 Teo Visuals</span>
+  <span>Medellín, Colombia</span>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50));
+</script>
+</body>
+</html>
