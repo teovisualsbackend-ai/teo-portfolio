@@ -19,7 +19,7 @@ await page.evaluate(() => document.querySelectorAll('.reveal').forEach(e => e.cl
 await page.addStyleTag({ content: '.marquee-track{animation-play-state:paused!important} *{scroll-behavior:auto!important}' });
 await page.waitForTimeout(500);
 
-const sections = ['hero', 'clientes', 'sobre', 'proceso', 'contacto'];
+const sections = ['hero', 'clientes', 'sobre', 'trabajos', 'proceso', 'contacto'];
 
 for (const id of sections) {
   const el = await page.$('#' + id);
@@ -29,14 +29,6 @@ for (const id of sections) {
   await el.screenshot({ path: `${OUT}/${id}.png` });
   console.log('✓', id);
 }
-
-// ── trabajos.html ──
-await page.goto(base + 'trabajos.html', { waitUntil: 'networkidle' });
-await page.waitForTimeout(2000);
-await page.evaluate(() => window.scrollTo(0, 0));
-await page.waitForTimeout(600);
-await page.screenshot({ path: `${OUT}/trabajos.png`, fullPage: false });
-console.log('✓ trabajos');
 
 await browser.close();
 console.log('done');
